@@ -15,7 +15,7 @@
     "weather-info": {
         "location": "📍الموقع: {name}, {region}, {country} ({lat}, {lon})",
         "localtime": "🕒 الوقت المحلي: {localtime}",
-        "temperature": "🌡️ درجة الحرارة: {temp}°C (درجة الحرارة المحسوسة: {feels_like}°C)",
+        "temperature": "🌡️ درجة الحرارة: {temp}{temp_unit_symbol} (درجة الحرارة المحسوسة: {feels_like}{temp_unit_symbol})",
         "condition": "⛅ الحالة: {condition}",
         "humidity": "💧 الرطوبة: {humidity}%",
         "pressure": "⚖️ الضغط: {pressure} mb",

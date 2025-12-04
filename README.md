@@ -38,7 +38,11 @@ Example:
 ```bash
 weather "New York"
 weather Tokyo
+weather "New York" --unit f   # Fahrenheit
+weather Tokyo -u f            # Fahrenheit (short option)
 ```
+
+By default, temperatures are shown in **Celsius**. Use `--unit c` or `--unit f` (or `-u c` / `-u f`) to select the temperature unit.
 
 ## 🌍 Available languages
 

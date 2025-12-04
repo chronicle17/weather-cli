@@ -15,12 +15,16 @@
     "weather-info": {
         "location": "📍 Location: {name}, {region}, {country} ({lat}, {lon})",
         "localtime": "🕒 Local Time: {localtime}",
-        "temperature": "🌡️ Temperature: {temp}°C (Feels like: {feels_like}°C)",
+        "temperature": "🌡️ Temperature: {temp}{temp_unit_symbol} (Feels like: {feels_like}{temp_unit_symbol})",
         "condition": "⛅ Condition: {condition}",
         "humidity": "💧 Humidity: {humidity}%",
         "pressure": "⚖️ Pressure: {pressure} mb",
         "wind": "💨 Wind: {wind_speed} km/h {wind_dir}",
         "precipitation": "🌧️ Precipitation: {precipitation} mm",
         "uv": "🔆 UV Index: {uv_index}"
+    },
+    "weather-errors": {
+        "city-not-found": "❗ No matching location found for \"{city}\".",
+        "generic-error": "❗ Could not fetch weather data (status {status_code})."
     }
 }
