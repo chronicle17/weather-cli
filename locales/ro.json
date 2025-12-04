@@ -15,7 +15,7 @@
     "weather-info": {
         "location": "📍Locație: {name}, {region}, {country} ({lat}, {lon})",
         "localtime": "🕒 Ora locală: {localtime}",
-        "temperature": "🌡️ Temperatura: {temp}°C (Temperatura resimțită: {feels_like}°C)",
+        "temperature": "🌡️ Temperatura: {temp}{temp_unit_symbol} (Temperatura resimțită: {feels_like}{temp_unit_symbol})",
         "condition": "⛅ Condiție: {condition}",
         "humidity": "💧 Umiditate: {humidity}%",
         "pressure": "⚖️ Presiune: {pressure} mb",

@@ -15,7 +15,7 @@
     "weather-info": {
         "location": "📍 位置: {name}, {region}, {country} ({lat}, {lon})",
         "localtime": "🕒 当地时间: {localtime}",
-        "temperature": "🌡️ 温度: {temp}°C (体感温度: {feels_like}°C)",
+        "temperature": "🌡️ 温度: {temp}{temp_unit_symbol} (体感温度: {feels_like}{temp_unit_symbol})",
         "condition": "⛅ 天气: {condition}",
         "humidity": "💧 湿度: {humidity}%",
         "pressure": "⚖️ 气压: {pressure} mb",

@@ -25,14 +25,68 @@ api_key = os.getenv('API_KEY')
 lang = os.getenv('TOOL_LANGUAGE', 'en')
 
 @app.command()
-def weather(city: str):
+def weather(
+    city: str,
+    unit: str = typer.Option(
+        "c",
+        "--unit",
+        "-u",
+        help="Temperature unit: c for Celsius, f for Fahrenheit",
+    ),
+):
+    unit = unit.lower()
+    if unit not in ("c", "f"):
+        raise typer.BadParameter("Unit must be 'c' for Celsius or 'f' for Fahrenheit.")
     spinner = yaspin()
     spinner.start()
     time.sleep(1)
     spinner.stop()
 
-    res = requests.get(f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&lang={lang}")
-    data = res.json()
+    res = requests.get(
+        f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}&lang={lang}"
+    )
+    try:
+        data = res.json()
+    except ValueError:
+        print(
+            translations["weather-errors"]["generic-error"].format(
+                status_code=res.status_code
+            )
+        )
+        raise typer.Exit(code=1)
+
+    # Handle API errors (invalid city, etc.)
+    if res.status_code != 200 or (isinstance(data, dict) and "error" in data):
+        error = data.get("error") if isinstance(data, dict) else None
+        error_code = error.get("code") if isinstance(error, dict) else None
+
+        if error_code == 1006:
+            # WeatherAPI code 1006: No matching location found.
+            print(
+                translations["weather-errors"]["city-not-found"].format(city=city)
+            )
+        else:
+            print(
+                translations["weather-errors"]["generic-error"].format(
+                    status_code=res.status_code
+                )
+            )
+        raise typer.Exit(code=1)
+
+    current = data["current"]
+    temp_c = current["temp_c"]
+    temp_f = current["temp_f"]
+    feels_like_c = current["feelslike_c"]
+    feels_like_f = current["feelslike_f"]
+
+    if unit == "f":
+        temp = temp_f
+        feels_like = feels_like_f
+        temp_unit_symbol = "°F"
+    else:
+        temp = temp_c
+        feels_like = feels_like_c
+        temp_unit_symbol = "°C"
 
     weather_data = {
         "name": data["location"]["name"],
@@ -41,15 +95,20 @@ def weather(city: str):
         "lat": data["location"]["lat"],
         "lon": data["location"]["lon"],
         "localtime": data["location"]["localtime"],
-        "temp": data["current"]["temp_c"],
-        "feels_like": data["current"]["feelslike_c"],
-        "condition": data["current"]["condition"]["text"],
-        "humidity": data["current"]["humidity"],
-        "pressure": data["current"]["pressure_mb"],
-        "wind_speed": data["current"]["wind_kph"],
-        "wind_dir": data["current"]["wind_dir"],
-        "precipitation": data["current"]["precip_mm"],
-        "uv_index": data["current"]["uv"]
+        "temp_c": temp_c,
+        "temp_f": temp_f,
+        "feels_like_c": feels_like_c,
+        "feels_like_f": feels_like_f,
+        "temp": temp,
+        "feels_like": feels_like,
+        "temp_unit_symbol": temp_unit_symbol,
+        "condition": current["condition"]["text"],
+        "humidity": current["humidity"],
+        "pressure": current["pressure_mb"],
+        "wind_speed": current["wind_kph"],
+        "wind_dir": current["wind_dir"],
+        "precipitation": current["precip_mm"],
+        "uv_index": current["uv"],
     }
 
     print("\n")

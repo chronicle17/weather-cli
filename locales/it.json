@@ -15,7 +15,7 @@
     "weather-info": {
         "location": "📍 Posizione: {name}, {region}, {country} ({lat}, {lon})",
         "localtime": "🕒 Ora locale: {localtime}",
-        "temperature": "🌡️ Temperatura: {temp}°C (Percepita: {feels_like}°C)",
+        "temperature": "🌡️ Temperatura: {temp}{temp_unit_symbol} (Percepita: {feels_like}{temp_unit_symbol})",
         "condition": "⛅ Condizioni: {condition}",
         "humidity": "💧 Umidità: {humidity}%",
         "pressure": "⚖️ Pressione: {pressure} mb",
